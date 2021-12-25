@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Homepage</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+</head>
+<body>
+<!--<div sec:authorize="isAuthenticated()">-->
+<div class="container my-2">
+    <hr>
+    <h1>Employee Portal</h1>
+    <br><br>
+    <h3 sec:authorize="!isAuthenticated()">You are not an authorized user, kindly login first</h3><br>
+    <a sec:authorize="!isAuthenticated()" th:href="@{/login.html}" class="btn btn-success">LOGIN</a>
+
+    <div sec:authorize="isAuthenticated()">
+        <p style="float: right">Logged user: <span th:text="${#authentication.getPrincipal().getUsername()}"></span>
+        </p>
+        <br><br>
+        <hr>
+        <a th:href="@{/employee/ticket/{username}(username=${#authentication.getPrincipal().getUsername()})}"
+           class="btn btn-primary">Go To Tickets Section</a>
+        <a th:href="@{/logout}" class="btn btn-danger" style="float: right">Logout</a>
+    </div>
+</div>
+</body>
+</html>
